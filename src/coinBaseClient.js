@@ -2,9 +2,8 @@ import { Client as CoinBaseClient } from 'coinbase';
 import config from './config';
 import Promise from 'bluebird';
 
-const { apiKey, apiSecret } = config;
-
 export const createCoinBaseTransportClient = () => {
+  const { apiKey, apiSecret } = config;
   return new CoinBaseClient({
     apiKey,
     apiSecret
@@ -53,14 +52,14 @@ const getTransactions = Promise.promisify((account, cb) => {
   });
 });
 
-const getCoinBuyPriceToGBP = (client, coinCurrencyName) => getPrice(client, {
+const getCoinBuyPriceToGBP = (client, cryptoCurrencyName) => getPrice(client, {
   tradeType: 'buy',
-  currencyPair: `${coinCurrencyToAcronym[coinCurrencyName]}-GBP`
+  currencyPair: `${coinCurrencyToAcronym[cryptoCurrencyName]}-GBP`
 });
 
-const getCoinSellPriceToGBP = (client, coinCurrencyName) => getPrice(client, {
+const getCoinSellPriceToGBP = (client, cryptoCurrencyName) => getPrice(client, {
   tradeType: 'sell',
-  currencyPair: `${coinCurrencyToAcronym[coinCurrencyName]}-GBP`
+  currencyPair: `${coinCurrencyToAcronym[cryptoCurrencyName]}-GBP`
 });
 
 export default class CoinBaseApiClient {
@@ -74,5 +73,13 @@ export default class CoinBaseApiClient {
 
   getAccount(accountName) {
     return getAccount(this._client, accountName);
+  }
+
+  getCoinBuyPriceToGBP(cryptoCurrencyName) {
+    return getCoinBuyPriceToGBP(this._client, cryptoCurrencyName);
+  }
+
+  getCoinSellPriceToGBP(cryptoCurrencyName) {
+    return getCoinSellPriceToGBP(this._client, cryptoCurrencyName);
   }
 }

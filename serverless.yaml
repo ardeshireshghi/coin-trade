@@ -25,5 +25,5 @@ functions:
       COINBASE_API_KEY: ${opt:coinBaseApiKey}
       COINBASE_API_SECRET: ${opt:coinBaseSecret}
     events:
-      - schedule:
-        rate: rate(5 minutes)
+      - schedule: rate(5 minutes)
+
