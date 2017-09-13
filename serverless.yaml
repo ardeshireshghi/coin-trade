@@ -1,0 +1,29 @@
+service: coin-trade
+provider:
+  name: aws
+  runtime: nodejs6.10
+  profile:  ${opt:awsProfile}
+  memorySize: 256
+  timeout: 300
+
+  stage: ${opt:stage}
+  region: eu-west-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "logs:createLogGroup"
+        - "logs:createLogStream"
+        - "logs:PutLogEvents"
+      Resource: "*"
+
+
+functions:
+  sell:
+    handler: index.handler
+    environment:
+      COINBASE_API_KEY: ${opt:coinBaseApiKey}
+      COINBASE_API_SECRET: ${opt:coinBaseSecret}
+    events:
+      - schedule:
+        rate: rate(5 minutes)
