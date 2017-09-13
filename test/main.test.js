@@ -1,29 +1,20 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
-
-const checkSell = require('../lib/main').checkSell;
 const CoinBaseApiClient = require('../lib/coinBaseClient').default;
+
+// coin base API mock resources
 const createMockTransaction = require('./fixtures/createMockTransaction');
-const createCoinBaseTransportClient = require('../lib/coinBaseClient').createCoinBaseTransportClient;
+const createMockAccount = require('./fixtures/createMockAccount');
 
 describe('checkSell', () => {
+  // Unit under test
+  const checkSell = require('../lib/main').checkSell;
+
   it('should not sell when profit is less than 50%', (done) => {
     const investmentAmount = '200.46';
     const returnAmount = '240.45';
     const commit = sinon.stub();
-    const mockAccount = {
-      id: "4cea968a-d8ab-538f-a0a9-xxxxxxxxx",
-      name: 'ETH Wallet',
-      primary: false,
-      type: 'wallet',
-      currency: 'ETH',
-      balance: {
-        amount: "0.96155712",
-        currency: "ETH"
-      },
-      resource: 'account',
-      sell: sinon.stub().yields(null, Object.assign({}, createMockTransaction('sell', returnAmount), {commit}))
-    };
+    const mockAccount = createMockAccount(returnAmount, commit);
 
     const client = new CoinBaseApiClient();
 
@@ -49,21 +40,7 @@ describe('checkSell', () => {
     };
 
     const commit = sinon.stub().yields(null, sellSuccessResponse);
-
-    const mockAccount = {
-      id: "4cea968a-d8ab-538f-a0a9-xxxxxxxxx",
-      name: 'ETH Wallet',
-      primary: false,
-      type: 'wallet',
-      currency: 'ETH',
-      balance: {
-        amount: "0.96155712",
-        currency: "ETH"
-      },
-      resource: 'account',
-      sell: sinon.stub().yields(null, Object.assign({}, createMockTransaction('sell', returnAmount), {commit}))
-    };
-
+    const mockAccount = createMockAccount(returnAmount, commit);
     const client = new CoinBaseApiClient();
 
     sinon.stub(client, 'getAccount').resolves(mockAccount);

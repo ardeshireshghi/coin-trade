@@ -1,5 +1,4 @@
 import Promise from 'bluebird';
-import CoinBaseApiClient from './coinBaseClient';
 
 const COINBASE_ETHER_ACCOUNT_NAME = 'ETH Wallet';
 const profitRatioToSellAt = 0.50; // 50 percent
@@ -25,7 +24,7 @@ const getLastBuyTransaction = (transactions) => {
 };
 
 export const checkSell = (apiClient) => {
-  const client = apiClient || new CoinBaseApiClient();
+  const client = apiClient;
 
   return client.getAccount(COINBASE_ETHER_ACCOUNT_NAME)
     .then(client.getTransactions)
