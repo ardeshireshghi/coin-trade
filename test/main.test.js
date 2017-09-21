@@ -10,7 +10,7 @@ describe('checkSell', () => {
   // Unit under test
   const checkSell = require('../lib/main').checkSell;
 
-  it('should not sell when profit is less than 50%', (done) => {
+  it('should not sell when profit is less than 33%', (done) => {
     const investmentAmount = '200.46';
     const returnAmount = '240.45';
     const commit = sinon.stub();
@@ -31,9 +31,9 @@ describe('checkSell', () => {
     });
   });
 
-  it('should sell when profit is greater than 50%', (done) => {
+  it('should sell when profit is greater than 33%', (done) => {
     const investmentAmount = '200.46';
-    const returnAmount = '310.45';
+    const returnAmount = '270.45';
 
     const sellSuccessResponse = {
       id: 'xxxx'

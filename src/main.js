@@ -1,7 +1,8 @@
 import Promise from 'bluebird';
+import config from './config';
 
 const COINBASE_ETHER_ACCOUNT_NAME = 'ETH Wallet';
-const profitRatioToSellAt = 0.50; // 50 percent
+const profitRatioToSellAt = config.profitMargin;
 
 const handleApiError = (err) => {
   console.error('Coinbase API Error:', err);

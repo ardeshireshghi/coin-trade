@@ -24,6 +24,7 @@ functions:
     environment:
       COINBASE_API_KEY: ${opt:coinBaseApiKey}
       COINBASE_API_SECRET: ${opt:coinBaseSecret}
+      SELL_PROFIT_MARGIN: ${opt:sellProfitMargin}
     events:
       - schedule: rate(5 minutes)
 
