@@ -45,6 +45,10 @@ export const checkSell = (apiClient) => {
               currency: 'ETH',
               commit: false
             }, (err, tx) => {
+              if (err) {
+                return reject(err);
+              }
+
               const { fees, total } = tx;
               const salesAmountGBP = parseFloat(total.amount);
               const allFeesGBP = fees.reduce((acc, item) => acc + parseFloat(item.amount.amount), 0);
